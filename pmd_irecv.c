@@ -237,13 +237,14 @@ boundary-atom list, LSB, then sends & receives boundary atoms.
 
       /* Send & receive information on boundary atoms-----------------*/
 
-      /* Message buffering */
-      for (i=1; i<=nsd; i++)
-        for (a=0; a<3; a++) /* Shift the coordinate origin */
-          dbuf[3*(i-1)+a] = r[lsb[ku][i]][a]-sv[ku][a]; 
-
       MPI_Irecv(dbufr,3*nrc,MPI_DOUBLE,MPI_ANY_SOURCE,20,
                MPI_COMM_WORLD,&request);
+
+       /* Message buffering */
+      for (i=1; i<=nsd; i++)
+        for (a=0; a<3; a++) /* Shift the coordinate origin */
+          dbuf[3*(i-1)+a] = r[lsb[ku][i]][a]-sv[ku][a];
+
       MPI_Send(dbuf,3*nsd,MPI_DOUBLE,inode,20,MPI_COMM_WORLD);
       MPI_Wait(&request,&status);
 
@@ -465,19 +466,20 @@ mvque[6][NBMAX]: mvque[ku][0] is the # of to-be-moved atoms to neighbor
 
       MPI_Irecv(&nrc,1,MPI_INT,MPI_ANY_SOURCE,110,
                MPI_COMM_WORLD,&request);
-      MPI_Send(&nsd,1,MPI_INT,inode,110,MPI_COMM_WORLD);
-      MPI_Wait(&request,&status);
-
-      /* Send & receive information on boundary atoms-----------------*/
 
       /* Message buffering */
       for (i=1; i<=nsd; i++)
         for (a=0; a<3; a++) {
           /* Shift the coordinate origin */
-          dbuf[6*(i-1)  +a] = r [mvque[ku][i]][a]-sv[ku][a]; 
+          dbuf[6*(i-1)  +a] = r [mvque[ku][i]][a]-sv[ku][a];
           dbuf[6*(i-1)+3+a] = rv[mvque[ku][i]][a];
           r[mvque[ku][i]][0] = MOVED_OUT; /* Mark the moved-out atom */
         }
+
+      MPI_Send(&nsd,1,MPI_INT,inode,110,MPI_COMM_WORLD);
+      MPI_Wait(&request,&status);
+
+      /* Send & receive information on boundary atoms-----------------*/
 
       MPI_Irecv(dbufr,6*nrc,MPI_DOUBLE,MPI_ANY_SOURCE,120,
                MPI_COMM_WORLD,&request);
