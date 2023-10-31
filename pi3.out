@@ -1,0 +1,10 @@
+==========================================
+SLURM_JOB_ID = 17517185
+SLURM_JOB_NODELIST = e16-[11-12]
+TMPDIR = /tmp/SLURM_17517185
+==========================================
+myid = 0; mpid = 1: device used = 1; partial pi = 0.874671
+myid = 0; mpid = 0: device used = 0; partial pi = 0.979926
+myid = 1; mpid = 1: device used = 1; partial pi = 0.567582
+myid = 1; mpid = 0: device used = 0; partial pi = 0.719409
+PI = 3.141588
