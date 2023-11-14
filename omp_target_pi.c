@@ -6,12 +6,12 @@
 
 int main() {
 	float step,sum=0.0,pi;
-	float sum_teasm[NTMS];
+	float sum_teams[NTMS];
 	step = 1.0/(float)NBIN;
         for (int j=0; j<NTMS; j++) sumteams[j] = 0.0;
         step = 1.0/(float)NBIN;
 
-	#pragma omp target teams map(step,sum_teams) num_teams(NTMS);
+	#pragma omp target teams map(step,sum_teams) num_teams(NTMS)
 	{
             #pragma omp distribute
             for (int j=0; j<NTMS; j++) {
